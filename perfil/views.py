@@ -10,7 +10,10 @@ from.utils import calcula_total
 
 def home(request):
     contas = Conta.objects.all()
-    saldo_total = calcula_total(contas, 'valor')
+    #saldo_total = calcula_total(contas, 'valor')
+    saldo_total=0
+    for conta in contas:
+        saldo_total += conta.valor
     return render(request, 'home.html', {'contas': contas, 'saldo_total': saldo_total})
         
         
@@ -19,8 +22,12 @@ def gerenciar(request):
     categorias=Categoria.objects.all()
     #total_contas = contas.aggregate(Sum('valor'))
  
-    valor_total = calcula_total(contas, 'valor')
-    return render(request, 'gerenciar.html', {'contas': contas,'valor_total': valor_total,'categorias':categorias})
+   # saldo_total = calcula_total(contas,'valor')
+    saldo_total=0
+    for conta in contas:
+        saldo_total += conta.valor
+    print (saldo_total)
+    return render(request, 'gerenciar.html', {'contas': contas,'saldo_total': saldo_total,'categorias':categorias})
  
  
 def cadastrar_banco(request):
